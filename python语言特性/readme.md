@@ -39,6 +39,8 @@
     - [28 Python2和3的区别](#28-python2和3的区别)
     - [29 super init](#29-super-init)
     - [30 range and xrange](#30-range-and-xrange)
+    - [31 utf-8 与 GBK](#31-utf-8-与-gbk)
+    - [32 为什么会出现4.0-3.6=0.40000001这种现象](#32-为什么会出现40-36040000001这种现象)
 
 <!-- /TOC -->
 # Python语言特性
@@ -688,3 +690,11 @@ What is the difference between range and xrange functions in Python 2.X?
 http://stackoverflow.com/questions/94935/what-is-the-difference-between-range-and-xrange-functions-in-python-2-x
 
 
+## 31 utf-8 与 GBK
+GBK 编码代替 UTF-8 编码
+	UTF-8是全球统一编码
+	GBK 编码是中文编码
+
+## 32 为什么会出现4.0-3.6=0.40000001这种现象
+
+	在二进制系统中无法精确地表示分数1/10，这就好像十进制无法精确地表示分数1/3一样

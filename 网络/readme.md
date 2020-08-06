@@ -81,6 +81,10 @@ post: [RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1](http://tools.ietf.org
 session技术是要使用到cookie的，之所以出现session技术，主要是为了安全。
 
 ## 7 apache和nginx的区别
+nginx和apache的区别
+2、作为 Web 服务器：相比 Apache，Nginx 使用更少的资源，支持更多的并发连接，体现更高的效率，这点使 Nginx 尤其受到虚拟主机提供商的欢迎。
+3、Nginx 配置简洁, Apache 复杂 ，Nginx 静态处理性能比 Apache 高 3倍以上 ，Apache 对 PHP 支持比较简单，Nginx 需要配合其他后端用 ，Apache 的组件比 Nginx 多 ，现在 Nginx 才是 Web 服务器的首选
+4、最核心的区别在于apache是同步多进程模型，一个连接对应一个进程；nginx是异步的，多个连接（万级别）可以对应一个进程
 
 nginx 相对 apache 的优点：
 * 轻量级，同样起web 服务，比apache 占用更少的内存及资源
@@ -94,6 +98,52 @@ apache 相对nginx 的优点：
 * 模块超多，基本想到的都可以找到
 * 少bug ，nginx 的bug 相对较多
 * 超稳定
+
+### 7.1 nginx、apache和tomcat之间的关系和区别
+[nginx、apache和tomcat之间的关系和区别](https://www.jianshu.com/p/ed4f9d0eb5b1)
+Apache/Nginx 应该叫做 HTTP Server，即安装后生成httpd服务。
+
+Tomcat 则是一个 Application Server，或者更准确的来说，是一个「Servlet/JSP」应用的容器（Ruby/Python 等其他语言开发的应用也无法直接运行在 Tomcat 上）
+
+**********
+一个 HTTP服务器，其关心的是 HTTP 协议层面的传输和访问控制，所以在 Apache/Nginx 上你可以看到代理、负载均衡等功能。
+客户端通过 HTTP Server 访问服务器上存储的资源（HTML 文件、图片文件等等）。通过 CGI 技术，也可以将处理过的内容通过 HTTP Server 分发，
+但是一个 HTTP Server 始终只是把服务器上的文件如实的通过 HTTP 协议传输给客户端。
+
+Nginx同样也是一款开源的HTTP服务器软件（当然它也可以作为邮件代理服务器、通用的TCP代理服务器）。HTTP服务器本质上也是一种应用程序——它通常运行在服务器之上，绑定服务器的IP地址并监听某一个tcp端口来接收并处理HTTP请求，这样客户端（一般来说是IE, Firefox，Chrome这样的浏览器）就能够通过HTTP协议来获取服务器上的网页（HTML格式）、文档（PDF格式）、音频（MP4格式）、视频（MOV格式）等等资源。下图描述的就是这一过程：
+<img src="https://picb.zhimg.com/50/904696074e077934e601f175913f42fd_hd.jpg?source=1940ef5c" data-rawwidth="849" data-rawheight="273" class="origin_image zh-lightbox-thumb" width="849" data-original="https://pic3.zhimg.com/904696074e077934e601f175913f42fd_r.jpg?source=1940ef5c"/>
+不仅仅是Apache HTTP Server和Nginx，绝大多数编程语言所包含的类库中也都实现了简单的HTTP服务器方便开发者使用：HttpServer (Java HTTP Server )Python SimpleHTTPServer使用这些类库能够非常容易的运行一个HTTP服务器，它们都能够通过绑定IP地址并监听tcp端口来提供HTTP服务。
+[HTTP 协议传输给客户端](https://www.zhihu.com/question/32212996/answer/87524617)
+
+
+
+
+而应用服务器，则是一个应用执行的容器。它首先需要支持开发语言的 Runtime（对于 Tomcat 来说，就是 Java），保证应用能够在应用服务器上正常运行。其次，需要支持应用相关的规范，例如类库、安全方面的特性。对于 Tomcat 来说，就是需要提供 JSP/Sevlet 运行需要的标准类库、Interface 等。
+
+**********
+    为了方便，应用服务器往往也会集成 HTTP Server 的功能，但是不如专业的 HTTP Server 那么强大，所以应用服务器往往是运行在 HTTP Server 的背后，执行应用，将动态的内容转化为静态的内容之后，通过 HTTP Server 分发到客户端。
+    
+Tomcat能够动态的生成资源并返回到客户端。Apache HTTP Server和Nginx都能够将某一个文本文件的内容通过HTTP协议返回到客户端，但是这个文本文件的内容是固定的——也就是说无论何时、任何人访问它得到的内容都是完全相同的，这样的资源我们称之为静态资源。动态资源则与之相反，在不同的时间、不同的客户端访问得到的内容是不同的，例如：包含显示当前时间的页面显示当前IP地址的页面Apache HTTP Server和Nginx本身不支持生成动态页面，但它们可以通过其他模块来支持（例如通过Shell、PHP、Python脚本程序来动态生成内容）。如果想要使用Java程序来动态生成资源内容，使用这一类HTTP服务器很难做到。Java Servlet技术以及衍生的Java Server Pages技术可以让Java程序也具有处理HTTP请求并且返回内容（由程序动态控制）的能力，Tomcat正是支持运行Servlet/JSP应用程序的容器（Container）
+
+    
+    
+
+打个比方：
+
+    nginx / apache是一辆卡车，上面可以装一些东西如html等（静态的）。但是不能装水（动态的），要装水必须要有桶（容器），Tomcat就是一个桶（装像Java这样的水），而这个桶也可以放在车上，也可以不放在卡车上。
+
+客户端（浏览器）：人；nginx / apache：卡车；
+
+静态页面：毛巾；
+
+tomcat：水桶；
+
+动态页面：水。
+
+人要拿毛巾，可以直接从卡车上拿取；
+
+人要拿水，需要先通过卡车找到车上的桶，才能取得（桶可以不放在车上，把桶单独放在别的地方人也可以取到水）；
+
 
 ## 8 网站用户密码保存
 

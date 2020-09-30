@@ -3,6 +3,7 @@
 
 - [Python语言特性](#python语言特性)
     - [1 Python的函数参数传递](#1-python的函数参数传递)
+        - [传参时注意，可变对象的处理](#传参时注意可变对象的处理)
     - [2 Python中的元类(metaclass)](#2-python中的元类metaclass)
     - [3 @staticmethod和@classmethod](#3-staticmethod和classmethod)
     - [4 类变量和实例变量](#4-类变量和实例变量)
@@ -43,6 +44,8 @@
     - [32 为什么会出现4.0-3.6=0.40000001这种现象](#32-为什么会出现40-36040000001这种现象)
     - [33 提高python运行效率的方法](#33-提高python运行效率的方法)
     - [34 int取值范围](#34-int取值范围)
+    - [35 dict 的 key](#35-dict-的-key)
+    - [36 try exception 中 final;](#36-try-exception-中-final)
 
 <!-- /TOC -->
 # Python语言特性
@@ -103,6 +106,29 @@ print a  # [1]
 当一个引用传递给函数的时候,函数自动复制一份引用,这个函数里的引用和外边的引用没有半毛关系了.所以第一个例子里函数把引用指向了一个不可变对象,当函数返回的时候,外面的引用没半毛感觉.而第二个例子就不一样了,函数内的引用指向的是可变对象,对它的操作就和定位了指针地址一样,在内存里进行修改.
 
 如果还不明白的话,这里有更好的解释: http://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference
+### 传参时注意，可变对象的处理
+由于 [] 是可变对象，所以下面的变化。  正确的是 需要处理下。 弄成一个新的。 
+```py
+>>> def fuc(a=[]):  
+...     a.append(1)
+...     for i in a:print(i) 
+... 
+>>> fuc()
+1
+>>> fuc()
+1
+1
+>>>   
+
+```
+这是正确的
+```py
+def fuc(a=[]): 
+    if not a: a = []
+    a.append(1)
+    for i in a:print(i) 
+
+```
 
 ## 2 Python中的元类(metaclass)
 
@@ -719,3 +745,12 @@ GBK 编码代替 UTF-8 编码
 
 int   - 2^31 --- 2^31 -1   (32 位)  其中有一位 是 符号位
 int   - 2^63 --- 2^63 -1   (64 位)  其中有一位 是 符号位
+
+## 35 dict 的 key
+str,tuple,set,dict,list 中
+tuple,str 才能用作 dict的 key; dict 的 key 要求是 能 哈希，能 哈希 的是 不可变类型。 `TypeError: unhashable type: 'list'`
+
+## 36 try exception 中 final;
+即使 try 或 exception 中 有return，还是会执行 final;
+
+

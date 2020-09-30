@@ -2,7 +2,7 @@
 
 - [操作系统](#操作系统)
     - [1 select,poll和epoll](#1-selectpoll和epoll)
-    - [2 调度算法](#2-调度算法)
+    - [2 进程调度算法](#2-进程调度算法)
     - [4 程序编译与链接](#4-程序编译与链接)
         - [1 预处理](#1-预处理)
         - [2 编译](#2-编译)
@@ -37,7 +37,7 @@ epoll改了三个缺点.
 
 关于epoll的: http://www.cnblogs.com/my_life/articles/3968782.html
 
-## 2 调度算法
+## 2 进程调度算法
 
 1. 先来先服务(FCFS, First Come First Serve)
 2. 短作业优先(SJF, Shortest Job First)

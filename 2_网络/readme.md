@@ -6,7 +6,8 @@
     - [4 urllib和urllib2的区别](#4-urllib和urllib2的区别)
     - [5 Post和Get](#5-post和get)
     - [6 Cookie和Session](#6-cookie和session)
-    - [7 apache和nginx的区别](#7-apache和nginx的区别)
+        - [集群间Session共享问题](#集群间session共享问题)
+    - [7 apache和 nginx的区别](#7-apache和-nginx的区别)
         - [7.1 nginx、apache和tomcat之间的关系和区别](#71-nginxapache和tomcat之间的关系和区别)
     - [8 网站用户密码保存](#8-网站用户密码保存)
     - [9 HTTP和HTTPS](#9-http和https)
@@ -67,7 +68,17 @@ post: [RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1](http://tools.ietf.org
 
 session技术是要使用到cookie的，之所以出现session技术，主要是为了安全。
 
-## 7 apache和nginx的区别
+### 集群间Session共享问题
+* 基于数据库的Session共享
+    * sessionid还是利用cookie机制存储到客户端，
+    * 但session数据却存放在数据库服务器上，
+    * 需要建立sessionid和session数据行的对应关系
+* 基于Cookie的Session共享
+	* 将session数据保存到客户端浏览器的cookie中
+* 基于内存数据库的Session共享
+	* memcache或redis是基于内存存储数据的
+
+## 7 apache和 nginx的区别
 nginx和apache的区别
 2、作为 Web 服务器：相比 Apache，Nginx 使用更少的资源，支持更多的并发连接，体现更高的效率，这点使 Nginx 尤其受到虚拟主机提供商的欢迎。
 3、Nginx 配置简洁, Apache 复杂 ，Nginx 静态处理性能比 Apache 高 3倍以上 ，Apache 对 PHP 支持比较简单，Nginx 需要配合其他后端用 ，Apache 的组件比 Nginx 多 ，现在 Nginx 才是 Web 服务器的首选
@@ -142,8 +153,8 @@ tomcat：水桶；
 ## 9 HTTP和HTTPS
 
 
-| 状态码       | 定义               |
-| :-------- | :--------------- |
+| 状态码      | 定义               |
+| :--------   | :--------------- |
 | 1xx 报告    | 接收到请求，继续进程       |
 | 2xx 成功    | 步骤成功接收，被理解，并被接受  |
 | 3xx 重定向   | 为了完成请求,必须采取进一步措施 |
@@ -154,6 +165,10 @@ tomcat：水桶；
 404: Not Found
 
 HTTPS握手,对称加密,非对称加密,TLS/SSL,RSA
+
+HTTP数据量很大，怎么发送
+* 使用post方法
+* 使用多线程
 
 ## 10 XSRF和XSS
 
@@ -208,7 +223,7 @@ WSGI, Web Server Gateway Interface，是Python应用程序或框架和Web服务�
 
 ## 16 中间人攻击
 
-在GFW里屡见不鲜的,呵呵.
+在 GFW 里屡见不鲜的,呵呵.
 
 中间人攻击（Man-in-the-middle attack，通常缩写为MITM）是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。
 

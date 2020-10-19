@@ -1,11 +1,43 @@
 <!-- TOC -->
 
+- [组成](#组成)
+    - [存储器](#存储器)
+    - [I/O](#io)
+    - [系统总线](#系统总线)
+    - [cpu](#cpu)
+        - [ALU](#alu)
+        - [cpu内部互联](#cpu内部互联)
+        - [寄存器](#寄存器)
+        - [CU](#cu)
+            - [排队逻辑](#排队逻辑)
+            - [控制存储器](#控制存储器)
+            - [控制单元寄存器和解码器](#控制单元寄存器和解码器)
 - [抽象 与 接口](#抽象-与-接口)
     - [计算机抽象层次](#计算机抽象层次)
         - [抽象举例](#抽象举例)
-- [bit 32, 64 是啥意思](#bit-32-64-是啥意思)
+        - [bit 32, 64 是啥意思](#bit-32-64-是啥意思)
+        - [arm 和 X86 的区别](#arm-和-x86-的区别)
 
 <!-- /TOC -->
+
+# 组成
+## 存储器
+Cache --- 高速缓冲存储器
+* 先进先出 FIFO (First In First Out)
+* 近期最少适用 LRU （Least Recently Used）
+## I/O
+## 系统总线
+## cpu 
+### ALU
+Arithmetic Logic Unit
+### cpu内部互联
+### 寄存器
+### CU
+Control Unit
+#### 排队逻辑
+#### 控制存储器
+#### 控制单元寄存器和解码器
+
 # 抽象 与 接口
 [抽象与接口](https://blog.csdn.net/qq_40818798/article/details/86592057?utm_medium=distribute.pc_relevant.none-task-blog-searchFromBaidu-6.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-searchFromBaidu-6.edu_weight)
 
@@ -45,8 +77,12 @@
 
 7. 面向接口的编程是直接类耦合调用的抽象
 
-# bit 32, 64 是啥意思
+### bit 32, 64 是啥意思
 32位 和 64 位 的区别 : 那是指计算机的 **中央处理器（CPU）可以直接处理的 二进制数据位数**，现在的主流计算机一般能够直接处理64位的二进制数，也就是64位的计算机。那么64位可以表示的数据是多少呢？它是2的64次方这么大的一个数，写成10进制数就是18446744073709551616。大于这个数计算机就会把它分成2段或更多的段来处理。
 
 
 主要是 存储地址(虚拟内存地址) 的区别。32位系统最多支持32位寻址，也就是2³²字节＝4GB。64位系统理论上支持64位寻址，也就是2⁶⁴字节＝16EB＝16×1024PB＝16×1024×1024TB＝16×1024×1024×1024GB＝17179869184GB，
+
+### arm 和 X86 的区别
+X86    ----复杂指令集 CISC   Complex Instruction Set Computer
+ARM    ----简单指令集 RISC   reduced Instruction Set Computer

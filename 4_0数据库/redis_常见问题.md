@@ -104,11 +104,16 @@ if (memcache.get(key) == null) {
         retry();  
     }  
 }
+
 ```
+
 [缓存问题_图_代码](https://zhuanlan.zhihu.com/p/75588064)
+ee
 
 # 缓存雪崩
+
 ### 什么是缓存雪崩
+
 当某一时刻发生大规模的缓存失效的情况，比如你的缓存服务宕机了
 与缓存击穿的区别在于这里针对很多key缓存，前者则是某一个key。
 ## 解决办法
@@ -126,6 +131,7 @@ ehcache 本地缓存的目的也是考虑在 Redis Cluster 完全不可用的时
 比如我们可以在原有的失效时间基础上增加一个随机值，比如1-5分钟随机，这样每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件
 
 加锁排队，伪代码如下：
+
 ```java
 //伪代码
 public object GetProductListNew() {
@@ -157,7 +163,7 @@ public object GetProductListNew() {
 注意：加锁排队的解决方式分布式环境的并发问题，有可能还要解决分布式锁的问题；线程还会被阻塞，用户体验很差！因此，在真正的高并发场景下很少使用！
 
 随机值伪代码：
-
+```java
 //伪代码
 public object GetProductListNew() {
     int cacheTime = 30;
@@ -181,6 +187,7 @@ public object GetProductListNew() {
         return cacheValue;
     }
 } 
+```
 解释说明：
 
 缓存标记：记录缓存数据是否过期，如果过期会触发通知另外的线程在后台去更新实际key的缓存；
